@@ -9,6 +9,7 @@ import uuid
 from datetime import datetime
 from models import storage
 
+
 class BaseModel:
     """
     the base model class that all other classes inherit fom it
@@ -52,8 +53,6 @@ class BaseModel:
         obj_dict.update({"updated_at": self.updated_at.isoformat()})
         return obj_dict
 
+
 if __name__ == "__main__":
     BaseModel()
-
-    
-    

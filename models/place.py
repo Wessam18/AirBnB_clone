@@ -3,6 +3,7 @@
 
 from models.base_model import BaseModel
 
+
 class Place(BaseModel):
     """place class inherit from BaseModel class"""
     city_id = ""
