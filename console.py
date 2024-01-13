@@ -41,7 +41,7 @@ class HBNBCommand(cmd.Cmd):
             else:
                 class_object = storage.all_classes()[class_name]
                 new_instance = class_object()
-                new_instance.save()
+                storage.save()
                 print(new_instance.id)
 
     def do_show(self, arg):
