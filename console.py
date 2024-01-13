@@ -92,13 +92,6 @@ class HBNBCommand(cmd.Cmd):
                 else:
                     value = s_arg[3].replace('"', '')
 
-                # cast the value
-                try:
-                    type_attr = getattr(storage.all()[key], s_arg[2])
-                    value = type_attr(value)
-                except (ValueError, TypeError, AttributeError):
-                    pass
-
                 setattr(storage.all()[key], s_arg[2], value)
                 storage.save()
 
