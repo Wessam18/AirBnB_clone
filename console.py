@@ -79,12 +79,31 @@ class HBNBCommand(cmd.Cmd):
             print("** value missing **")
         else:
             key = f"{s_arg[0]}.{s_arg[1]}"
+            typeA = type(getattr(storage.all()[key], s_arg[2]))
+            try:
+                s_arg[3] = typeA(s_arg[3])
+            except AttributeError:
+                pass
             if type(s_arg[3]) not in [str, float, int]:
                 pass
             elif s_arg[2] in ["id", "created_at", "updated_at"]:
                 pass
             else:
-                setattr(storage.all()[key], s_arg[2], s_arg[3])
+
+                # check if the value has an " and remove it
+                if not re.search('"', s_arg[3]):
+                    value = s_arg[3]
+                else:
+                    value = s_arg[3].replace('"', '')
+
+                # cast the value
+                try:
+                    type_attr = (getattr(storage.all()[key], s_arg[2]))
+                    value = type_attr(value)
+                except (ValueError, TypeError):
+                    pass
+
+                setattr(storage.all()[key], s_arg[2], value)
                 storage.save()
 
     def do_destroy(self, arg):
@@ -112,8 +131,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             all_instances = []
             for value in storage.all().values():
-                if len(s_arg) == 1 and \
-                        s_arg[0] == value.__class__.__name__:
+                if len(s_arg) == 1 and s_arg[0] == value.__class__.__name__:
                     all_instances.append(str(value))
                 elif len(s_arg) == 0:
                     all_instances.append(str(value))
@@ -121,8 +139,4 @@ class HBNBCommand(cmd.Cmd):
 
 
 if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        for arg in sys.argv[1:]:
-            HBNBCommand().oncmd(arg)
-    else:
-        HBNBCommand().cmdloop()
+    HBNBCommand().cmdloop()
