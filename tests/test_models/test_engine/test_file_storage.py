@@ -34,6 +34,9 @@ class TestFileStorage(unittest.TestCase):
         objects = self.file_storage.all()
         self.assertIsInstance(objects, dict)
         self.assertIn(f"BaseModel.{self.test_model.id}", objects)
+        self.assertIsNotNone(objects)
+        self.assertEqual(type(objects), dict)
+        self.assertIs(objects, self.file_storage._FileStorage__objects)
 
     def test_new(self):
         """Test the new method"""
