@@ -2,7 +2,6 @@
 """build console for AirBnB site"""
 import cmd
 import re
-import sys
 
 from models import storage
 from models.base_model import BaseModel
@@ -36,31 +35,32 @@ class HBNBCommand(cmd.Cmd):
         if not arg:
             print("** class name missing **")
         else:
-            c_name = arg.split()[0]
-            if c_name not in storage.all_classes():
+            class_name = arg.split()[0]
+            if class_name not in storage.all_classes():
                 print("** class doesn't exit **")
             else:
-                c_object = storage.all_classes()[c_name]
-                new_instance = c_object()
+                class_object = storage.all_classes()[class_name]
+                new_instance = class_object()
                 new_instance.save()
                 print(new_instance.id)
 
     def do_show(self, arg):
         """command print string represetation of an instance"""
-        s_args = arg.split()
-        if len(s_args) == 0:
+        splitted_arg = arg.split()
+        if len(splitted_arg) == 0:
             print("** class name missing **")
-        elif s_args[0] not in storage.all_classes():
-            print("** class doesn't exist **")
-        elif len(s_args) == 1:
+        elif len(splitted_arg) == 1:
             print("** instance id missing **")
+        elif splitted_arg[0] not in storage.all_classes():
+            print("** class doesn't exist **")
         else:
-            class_id = f"{s_args[0]}.{s_args[1]}"
+            class_id = f"{splitted_arg[0]}.{splitted_arg[1]}"
             if class_id not in storage.all().keys():
                 print("** no instance found **")
             else:
-                instance_str = storage.all()[class_id]
-                print(instance_str)
+                for key, value in storage.all().items():
+                    if key == class_id:
+                        print(value)
 
     def do_update(self, arg):
         """command update an instance based on class name and id"""
@@ -72,35 +72,31 @@ class HBNBCommand(cmd.Cmd):
         elif len(s_arg) == 1:
             print("** instance id missing **")
         elif f"{s_arg[0]}.{s_arg[1]}" not in storage.all().keys():
-            print(" ** no instance found ** ")
+            print("** no insance found **")
         elif len(s_arg) == 2:
             print("** attribute name missing **")
         elif len(s_arg) == 3:
             print("** value missing **")
         else:
             key = f"{s_arg[0]}.{s_arg[1]}"
-            typeA = type(getattr(storage.all()[key], s_arg[2]))
-            try:
-                s_arg[3] = typeA(s_arg[3])
-            except AttributeError:
-                pass
+
             if type(s_arg[3]) not in [str, float, int]:
                 pass
             elif s_arg[2] in ["id", "created_at", "updated_at"]:
                 pass
             else:
-
-                # check if the value has an " and remove it
-                if not re.search('"', s_arg[3]):
+                value = s_arg[3]
+                # check if the value has " char
+                if not re.search('"', value):
                     value = s_arg[3]
                 else:
                     value = s_arg[3].replace('"', '')
 
                 # cast the value
                 try:
-                    type_attr = (getattr(storage.all()[key], s_arg[2]))
+                    type_attr = getattr(storage.all()[key], s_arg[2])
                     value = type_attr(value)
-                except (ValueError, TypeError):
+                except (ValueError, TypeError, AttributeError):
                     pass
 
                 setattr(storage.all()[key], s_arg[2], value)
