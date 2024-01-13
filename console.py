@@ -37,7 +37,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             class_name = arg.split()[0]
             if class_name not in storage.all_classes():
-                print("** class doesn't exit **")
+                print("** class doesn't exist **")
             else:
                 class_object = storage.all_classes()[class_name]
                 new_instance = class_object()
@@ -49,10 +49,10 @@ class HBNBCommand(cmd.Cmd):
         splitted_arg = arg.split()
         if len(splitted_arg) == 0:
             print("** class name missing **")
-        elif len(splitted_arg) == 1:
-            print("** instance id missing **")
         elif splitted_arg[0] not in storage.all_classes():
             print("** class doesn't exist **")
+        elif len(splitted_arg) == 1:
+            print("** instance id missing **")
         else:
             class_id = f"{splitted_arg[0]}.{splitted_arg[1]}"
             if class_id not in storage.all().keys():
