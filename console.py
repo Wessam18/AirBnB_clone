@@ -79,11 +79,6 @@ class HBNBCommand(cmd.Cmd):
             print("** value missing **")
         else:
             key = f"{s_arg[0]}.{s_arg[1]}"
-            typeA = type(getattr(storage.all()[key], s_arg[2]))
-            try:
-                s_arg[3] = typeA(s_arg[3])
-            except AttributeError:
-                pass
             if type(s_arg[3]) not in [str, float, int]:
                 pass
             elif s_arg[2] in ["id", "created_at", "updated_at"]:
