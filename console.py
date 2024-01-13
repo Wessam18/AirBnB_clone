@@ -72,7 +72,7 @@ class HBNBCommand(cmd.Cmd):
         elif len(s_arg) == 1:
             print("** instance id missing **")
         elif f"{s_arg[0]}.{s_arg[1]}" not in storage.all().keys():
-            print("** no insance found **")
+            print("** no instance found **")
         elif len(s_arg) == 2:
             print("** attribute name missing **")
         elif len(s_arg) == 3:
