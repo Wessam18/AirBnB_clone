@@ -11,12 +11,30 @@ from models.engine.file_storage import FileStorage
 class TestFileStorage(unittest.TestCase):
     """Test the file storage class"""
 
+    def test_file_path(self):
+        """Test the file Path"""
+        self.assertEqual(storage._FileStorage__file_path, "file.json")
+
+    def test_objects(self):
+        """Test the __objects attribute"""
+        self.file_storage.new(self.test_model)
+        key = f"BaseModel.{self.test_model.id}"
+        self.assertIn(key, self.file_storage._FileStorage__objects)
+        self.assertEqual(
+                self.file_storage._FileStorage__objects[key], self.test_model)
+
     def setUp(self):
         """Set up for the tests"""
         self.file_storage = FileStorage()
         self.test_model = BaseModel()
         self.test_model.name = "Test"
         self.test_model.save()
+
+    def test_init(self):
+        """Test the __init__"""
+        new_model = BaseModel(name="Test", number=42)
+        self.assertEqual(new_model.name, "Test")
+        self.assertEqual(new_model.number, 42)
 
     def testClassInstance(self):
         """Test the class instance"""
