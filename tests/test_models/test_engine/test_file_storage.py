@@ -56,6 +56,16 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(type(objects), dict)
         self.assertIs(objects, self.file_storage._FileStorage__objects)
 
+    def test_reload_file(self):
+        """Test FileStorage reload"""
+        self.file_storage.new(self.test_model)
+        self.file_storage.save()
+        FileStorage.__objects = {}
+        self.file_storage.reload()
+        objects = self.file_storage.all()
+        key = f"BaseModel.{self.test_model.id}"
+        self.assertIn(key, objects)
+
     def test_new(self):
         """Test the new method"""
         new_model = BaseModel()
@@ -94,7 +104,7 @@ class TestFileStorage(unittest.TestCase):
 
         createTime1 = objectTODict['created_at']
         updateTime1 = objectTODict['updated_at']
-        # self.assertEqual(createTime1, updateTime1)
+        self.assertEqual(createTime1, updateTime1)
 
         my_model.name = "School"
         my_model.save()
