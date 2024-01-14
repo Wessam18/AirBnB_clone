@@ -155,14 +155,10 @@ class HBNBCommand(cmd.Cmd):
 
             if command in HBNBCommand.com_classes and \
                     cls_name in storage.all_classes():
-                arg = command + " " + cls_name + " " + the_id
+                arg = f"{command} {cls_name} {the_id}"
 
         return arg
 
 
 if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        for arg in sys.argv[1:]:
-            HBNBCommand().onecmd(arg)
-    else:
-        HBNBCommand().cmdloop()
+    HBNBCommand().cmdloop()
