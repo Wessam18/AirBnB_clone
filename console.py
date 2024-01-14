@@ -2,7 +2,7 @@
 """build console for AirBnB site"""
 import cmd
 import re
-
+import sys
 from models import storage
 from models.base_model import BaseModel
 from models.user import User
@@ -16,6 +16,8 @@ from models.state import State
 class HBNBCommand(cmd.Cmd):
     """class for command interpreter"""
     prompt = "(hbnb) "
+
+    com_classes = ['create', 'show', 'update', 'all', 'destroy', 'count']
 
     def do_quit(self, arg):
         """Quit command to exit the program"""
@@ -115,6 +117,7 @@ class HBNBCommand(cmd.Cmd):
     def do_all(self, arg):
         """print all str representation of all instances"""
         s_arg = arg.split()
+
         if len(s_arg) == 1 and s_arg[0] not in storage.all_classes():
             print("** class doesn't exist **")
         else:
@@ -126,6 +129,23 @@ class HBNBCommand(cmd.Cmd):
                     all_instances.append(str(value))
             print(all_instances)
 
+    def precmd(self, arg):
+        """Function That excute before cmd"""
+        if '.' in arg and '(' in arg and ')' in arg:
+            cls_name = arg.split('.')[0]
+            command = arg.split('.')[1].split('(')[0]
+            other = arg.split('.')[1].split('(')[1].split(')')[0]
+
+            if command in HBNBCommand.com_classes and \
+                    cls_name in storage.all_classes():
+                arg = command + ' ' + cls_name + ' ' + other
+
+        return arg
+
 
 if __name__ == '__main__':
-    HBNBCommand().cmdloop()
+    if len(sys.argv) > 1:
+        for arg in sys.argv[1:]:
+            HBNBCommand().onecmd(arg)
+    else:
+        HBNBCommand().cmdloop()
