@@ -1,10 +1,10 @@
 #!/usr/bin/python3
-
-# FILEPATH: /d:/ALX/Python/projects/Airbnb-The consol/test-bnb/tests/test_models/test_state.py
+"""test state class"""
 
 import unittest
 from models.state import State
 from models.base_model import BaseModel
+
 
 class TestState(unittest.TestCase):
     """Test the State class"""
@@ -50,6 +50,7 @@ class TestState(unittest.TestCase):
         state_str = str(self.my_state)
         self.assertEqual(type(state_str), str)
         self.assertTrue("State" in state_str)
+
 
 if __name__ == "__main__":
     unittest.main()

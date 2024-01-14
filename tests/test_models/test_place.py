@@ -1,13 +1,17 @@
 #!/usr/bin/python3
+"""test place class"""
 
 import unittest
 from models.base_model import BaseModel
 from models.place import Place
 from datetime import datetime
 
+
 class TestPlace(unittest.TestCase):
+    """test place class"""
 
     def setUp(self):
+        """setup the test"""
         self.place = Place()
 
     def test_class_exists(self):
@@ -73,6 +77,7 @@ class TestPlace(unittest.TestCase):
         """Test if the str method has the correct output"""
         string = "[Place] ({}) {}".format(self.place.id, self.place.__dict__)
         self.assertEqual(string, str(self.place))
+
 
 if __name__ == "__main__":
     unittest.main()

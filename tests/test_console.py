@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""test cases for the console"""
 
 import unittest
 from unittest.mock import patch
@@ -7,6 +8,7 @@ from console import HBNBCommand
 
 
 class TestConsole(unittest.TestCase):
+    """class test the console"""
     def setUp(self):
         """Set up for the tests"""
         self.cli = HBNBCommand()
@@ -86,10 +88,13 @@ class TestConsole(unittest.TestCase):
 
     @patch('sys.stdout', new_callable=StringIO)
     def test_do_create(self, mock_stdout):
+        """test create method"""
         self.cli.do_create('')
         self.assertEqual(mock_stdout.getvalue(), "** class name missing **\n")
         self.cli.do_create('User')
-        self.assertRegex(mock_stdout.getvalue(), '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\n$')
+        self.assertRegex(
+            mock_stdout.getvalue(),
+            '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\n$')
 
 
 if __name__ == "__main__":

@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""test the storage of data"""
 
 import unittest
 import os

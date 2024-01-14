@@ -15,6 +15,7 @@ class TestAmenity(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
+        """test setup"""
         try:
             os.rename("file.json", "tmp")
         except IOError:
@@ -22,6 +23,7 @@ class TestAmenity(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
+        """to test the class"""
         try:
             os.remove("file.json")
         except IOError:
