@@ -129,16 +129,33 @@ class HBNBCommand(cmd.Cmd):
                     all_instances.append(str(value))
             print(all_instances)
 
+    def do_count(self, arg):
+        """function that making count"""
+        count = 0
+        args = arg.split()
+
+        if args[0] not in storage.all_classes():
+            print("class dosen't exist")
+
+        for key, value in storage.all().items():
+            class_name = value.__class__.__name__
+            if args[0] == class_name:
+                count += 1
+        print(count)
+
     def precmd(self, arg):
         """Function That excute before cmd"""
         if '.' in arg and '(' in arg and ')' in arg:
             cls_name = arg.split('.')[0]
             command = arg.split('.')[1].split('(')[0]
-            other = arg.split('.')[1].split('(')[1].split(')')[0]
+
+            if len(arg.split('.')[1].split('(')[1].split(')')) == 2:
+                the_id = arg.split('.')[1].split('(')[1]. \
+                        split(')')[0].strip('"')
 
             if command in HBNBCommand.com_classes and \
                     cls_name in storage.all_classes():
-                arg = command + ' ' + cls_name + ' ' + other
+                arg = command + " " + cls_name + " " + the_id
 
         return arg
 
