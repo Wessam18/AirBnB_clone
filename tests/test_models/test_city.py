@@ -9,7 +9,7 @@ from unittest.mock import patch
 from models.city import City
 
 
-class TestCityAndBaseModel(unittest.TestCase):
+class testCity(unittest.TestCase):
     def setUp(self):
         try:
             os.rename("file.json", "tmp")
