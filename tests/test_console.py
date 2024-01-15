@@ -76,5 +76,6 @@ class TestConsole(unittest.TestCase):
             output,
             '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$')
 
+
 if __name__ == '__main__':
     unittest.main()
