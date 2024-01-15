@@ -81,20 +81,21 @@ class HBNBCommand(cmd.Cmd):
             print("** value missing **")
         else:
             key = f"{s_arg[0]}.{s_arg[1]}"
-            init = storage.all()[key]
-            att_name = s_arg[3]
-            att_val = s_arg[4]
-            if att_name in dir(init):
-                if att_val.isdigit():
-                    att_val = int(att_val)
-                elif att_val.replace('.', '', 1).isdigit():
-                    att_val = float(att_val)
-                else:
-                    att_val = att_val.strip('"')
-                setattr(init, att_name, att_val)
-                init.save()
+
+            if type(s_arg[3]) not in [str, float, int]:
+                pass
+            elif s_arg[2] in ["id", "created_at", "updated_at"]:
+                pass
             else:
-                print("** no instance found **")
+                value = s_arg[3]
+                # check if the value has " char
+                if not re.search('"', value):
+                    value = s_arg[3]
+                else:
+                    value = s_arg[3].replace('"', '')
+
+                setattr(storage.all()[key], s_arg[2], value)
+                storage.save()
 
     def do_destroy(self, arg):
         """command deletes an instance based on class name and id"""
