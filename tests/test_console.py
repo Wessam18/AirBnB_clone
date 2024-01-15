@@ -309,6 +309,40 @@ class TestHBNBCommand(unittest.TestCase):
         x = (self.capt_out.getvalue())
         self.assertEqual("** class doesn't exist **\n", x)
 
+    def test_update_valid_dictionary_dot_notation(self):
+        """Test updating with a valid dictionary using dot notation"""
+        self._test_update_valid_dictionary_notation("{}.update({{'attr_name': 'attr_value'}})")
+
+    def test_update_valid_dictionary_with_int_space_notation(self):
+        """Test updating with a valid dictionary with int using space notation"""
+        self._test_update_valid_dictionary_notation("update Place {} {'max_guest': 98})")
+
+    def test_update_valid_dictionary_with_int_dot_notation(self):
+        """Test updating with a valid dictionary with int using dot notation"""
+        self._test_update_valid_dictionary_notation("Place.update({}, {'max_guest': 98})")
+
+    def test_update_valid_dictionary_with_float_space_notation(self):
+        """Test updating with a valid dictionary with float using space notation"""
+        self._test_update_valid_dictionary_notation("update Place {} {'latitude': 9.8})")
+
+    def test_update_valid_dictionary_with_float_dot_notation(self):
+        """Test updating with a valid dictionary with float using dot notation"""
+        self._test_update_valid_dictionary_notation("Place.update({}, {'latitude': 9.8})")
+
+    def _test_update_valid_dictionary_notation(self, test_cmd):
+        """Helper method for testing update with valid dictionary notation"""
+        classes = ["BaseModel", "User", "State", "City", "Place", "Amenity", "Review"]
+
+        for class_name in classes:
+            with patch("sys.stdout", new=StringIO()) as output:
+                HBNBCommand().onecmd(f"create {class_name}")
+                test_id = output.getvalue().strip()
+
+            test_cmd_instance = test_cmd.format(class_name, test_id)
+            HBNBCommand().onecmd(test_cmd_instance)
+            test_dict = storage.all()[f"{class_name}.{test_id}"].__dict__
+            self.assertEqual("attr_value", test_dict["attr_name"])
+
 
 if __name__ == '__main__':
     unittest.main()
