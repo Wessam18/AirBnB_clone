@@ -1,6 +1,11 @@
 header {
     color: white;
+    
     height: 70px; 
     width: 100%;  
     border-bottom: 1px #CCCCCC;
+    background-image: url("../images/logo.png");
+    background-repeat: no-repeat;
+    background-position: left, center;
+    margin-left: 20px;
 }
