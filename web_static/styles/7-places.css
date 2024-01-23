@@ -1,6 +1,9 @@
 .places h1 {
     text-align: top left;
     font-size: 30px;
+    padding-left: 15px;
+    margin-bottom: 0;
+    z-index: -1;
 }
 
 .multi-places article {
@@ -9,11 +12,19 @@
     margin: 20px;
     border: 1px solid #FF5A5F; 
     border-radius: 4px;
+    
+    
 }
 
 .multi-places article h2 {
     font-size: 30px;
     text-align: center;
+    margin: 0;
+}
+
+.multi-places {
     display: flex;
-    
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
 }
