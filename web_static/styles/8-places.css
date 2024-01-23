@@ -42,8 +42,13 @@
     border-radius: 50%;
     align-items: center;
     position: relative;
-    left: 310px;
+    left: 280px;
+    bottom: 15px;
     
+}
+
+div.price_by_night {
+    padding: 15px 15px;
 }
 
 .information {
